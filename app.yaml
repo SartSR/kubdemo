@@ -1,26 +1,14 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: demo
+  name: demo-pod
+  labels:
+    app: demo
+    run: demo
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: demo
-  template:
-    metadata:
-      labels:
-        app: demo
-    spec:
-      containers:
-      - name: demo
-        image: gcr.io/k8sk3s/demo:v2.0.0
-        ports:
-        - containerPort: 8080
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          
+  containers:
+  - name: demo-container
+    image: gcr.io/k8s-k3s/demo:v1.0.0
+    ports:
+    - containerPort: 8080
+      name: http
